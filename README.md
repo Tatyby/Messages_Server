@@ -8,3 +8,5 @@
 
 swagger доступен по адресу
 http://localhost:8080/swagger-ui/index.html#/
+
+запустить можно с помощью Docker
