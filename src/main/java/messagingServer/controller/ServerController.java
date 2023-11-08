@@ -37,28 +37,19 @@ public class ServerController {
     }
 
     @Operation(summary = "Завершение и удаление диалога по ID сессии")
-    @DeleteMapping("/deleteDialog/{sessionID}")
-    public ResponseEntity<?> deleteDialog(@PathVariable Integer sessionID) {
-        serverService.stopDialog(sessionID);
+    @DeleteMapping("/deleteDialog/{clientID}/{sessionID}")
+    public ResponseEntity<?> deleteDialog(@PathVariable Integer clientID,
+                                          @PathVariable Integer sessionID) {
+        serverService.stopDialog(clientID, sessionID);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @Operation(summary = "отправка сообщения по ID сессии")
-    @PostMapping("/sendMessage/{sessionID}")
-    public ResponseEntity<?> sendMessage(@PathVariable Integer sessionID, @RequestBody MessageDialogRequest messageDialog) {
-        serverService.sendMessage(sessionID, messageDialog.getMsg());
+    @PostMapping("/sendMessage/{clientID}/{sessionID}")
+    public ResponseEntity<?> sendMessage(@PathVariable Integer clientID,
+                                         @PathVariable Integer sessionID, @RequestBody MessageDialogRequest messageDialog) {
+        serverService.sendMessage(clientID, sessionID, messageDialog.getMsg());
         return new ResponseEntity<>(HttpStatus.OK);
-    }
-
-    @GetMapping("/get")
-    public ResponseEntity<List<Integer>> get() {
-        return new ResponseEntity<>(serverService.get(), HttpStatus.OK);
-    }
-
-    @Operation(summary = "получение списка сообщений по ID сессии")
-    @GetMapping("/getMsg/{sessionID}")
-    public ResponseEntity<List<String>> getMsg(@PathVariable Integer sessionID) {
-        return new ResponseEntity<>(serverService.getMsg(sessionID), HttpStatus.OK);
     }
 
 }
